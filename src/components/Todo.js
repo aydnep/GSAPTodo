@@ -23,37 +23,32 @@ const animation = {
 };
 
 
-class Todo extends React.Component {
-  handleEnter = (target) => {
-    animation.show(target);
-  }
-  handleExit = (target) => {
-    animation.hide(target);
-  }
-
-  render() {
-    const { onClick, completed, text } = this.props;
-    return (
-      <Transition
-        {...this.props}
-        timeout={duration * 1000}
-        onEnter={this.handleEnter}
-        onExit={this.handleExit}
-      >
-        {() => (
-          <li
-            onClick={onClick}
-            style={{
-              textDecoration: completed ? 'line-through' : 'none'
-            }}
-          >
-            {text}
-          </li>
-        )}
-      </Transition >
-    )
-  }
+const handleEnter = (target) => {
+  animation.show(target);
 }
+const handleExit = (target) => {
+  animation.hide(target);
+}
+
+const Todo = ({ onClick, completed, text, ...props }) => (
+  <Transition
+    {...props}
+    timeout={duration * 1000}
+    onEnter={handleEnter}
+    onExit={handleExit}
+  >
+    {() => (
+      <li
+        onClick={onClick}
+        style={{
+          textDecoration: completed ? 'line-through' : 'none'
+        }}
+      >
+        {text}
+      </li>
+    )}
+  </Transition >
+);
 
 Todo.propTypes = {
   onClick: PropTypes.func.isRequired,
